@@ -194,9 +194,15 @@ public abstract class AbstractEventBus implements EventBus {
                     }
                 }
 
+                boolean sentEvent = !handlers.isEmpty() || !broadcastHandlerManager.isEmpty();
                 for (final BroadcastEventHandler handler : broadcastHandlerManager) {
                     if (log.isDebugEnabled()) log.debug("broadcast eventbus #" + e);
-                    handler.onEvent(e);
+                    sentEvent |= handler.onEvent(e);
+                }
+
+                if (!sentEvent) {
+                    if (causes == null) causes = new HashSet<>();
+                    causes.add(new IllegalStateException("Avoid to fire event that are not listen by any class : " + event));
                 }
             }
 

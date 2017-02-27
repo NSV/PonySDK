@@ -37,10 +37,13 @@ public class NotificationActivity extends AbstractActivity<NotificationView> imp
     }
 
     @Override
-    public void onEvent(final Event<?> event) {
+    public boolean onEvent(final Event<?> event) {
         if (event instanceof BusinessEvent<?>) {
             final BusinessEvent<?> businessEvent = (BusinessEvent<?>) event;
             view.addEvent(businessEvent);
+            return true;
+        } else {
+            return false;
         }
     }
 

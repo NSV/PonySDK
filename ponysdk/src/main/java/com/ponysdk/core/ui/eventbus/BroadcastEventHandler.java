@@ -26,5 +26,5 @@ package com.ponysdk.core.ui.eventbus;
 @FunctionalInterface
 public interface BroadcastEventHandler {
 
-    void onEvent(Event<?> event);
+    boolean onEvent(Event<?> event);
 }
